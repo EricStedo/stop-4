@@ -1,0 +1,15 @@
+{
+  "name": "Rescue App",
+  "short_name": "Rescue",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1e1e2f",
+  "description": "Votre soutien immédiat en cas de stress",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

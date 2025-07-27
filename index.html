@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rescue - Exercices Audio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rescue - Exercices Audio</h1>
+        <p>Votre soutien immédiat en cas de stress</p>
+        <button onclick="playSOS()">🆘 Exercice SOS</button>
+        <button onclick="playBreathing478()">🧘 Respiration 4-7-8 (5 cycles)</button>
+        <button onclick="playGrounding()">🌍 Exercice Grounding (ancrage)</button>
+        <button onclick="playMeditation()">🧘‍♀️ Méditation guidée</button>
+        <button onclick="playBodyScan()">🧘 Body Scan</button>
+        <button onclick="playRelaxation()">🎧 Relaxation guidée</button>
+    </div>
+
+    <script>
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function playAudioWithPause(file, totalDuration = null) {
+            return new Promise(resolve => {
+                const audio = new Audio("audios/" + file);
+                audio.play();
+                audio.onended = async () => {
+                    if (totalDuration) {
+                        const remaining = totalDuration - audio.duration * 1000;
+                        if (remaining > 0) await wait(remaining);
+                    }
+                    resolve();
+                };
+            });
+        }
+
+        async function playSOS() {
+            await playAudioWithPause("sos_intro.mp3");
+            await playAudioWithPause("sos_start.mp3");
+            await playAudioWithPause("sos_inhale.mp3", 4000);
+            await playAudioWithPause("sos_hold.mp3", 7000);
+            await playAudioWithPause("sos_exhale.mp3", 8000);
+            await playAudioWithPause("sos_end.mp3");
+        }
+
+        async function playBreathing478() {
+            await playAudioWithPause("breathing_intro.mp3");
+            await playAudioWithPause("breathing_start.mp3");
+
+            for (let i = 0; i < 5; i++) {
+                await playAudioWithPause("breathing_inhale.mp3", 4000);
+                await playAudioWithPause("breathing_hold.mp3", 7000);
+                await playAudioWithPause("breathing_exhale.mp3", 8000);
+            }
+
+            await playAudioWithPause("breathing_end.mp3");
+        }
+
+        async function playGrounding() {
+            await playAudioWithPause("grounding_intro.mp3");
+            await playAudioWithPause("grounding_step1.mp3", 10000);
+            await playAudioWithPause("grounding_step2.mp3", 10000);
+            await playAudioWithPause("grounding_step3.mp3", 10000);
+            await playAudioWithPause("grounding_step4.mp3", 10000);
+            await playAudioWithPause("grounding_step5.mp3", 10000);
+            await playAudioWithPause("grounding_end.mp3");
+        }
+
+        async function playMeditation() {
+            await playAudioWithPause("meditation_intro.mp3");
+            await playAudioWithPause("meditation_start.mp3");
+
+            const totalTargetDuration = 180000;
+            const promptDurations = [10000, 10000, 10000, 10000];
+            const usedTime = promptDurations.reduce((a, b) => a + b, 0);
+            const remaining = totalTargetDuration - usedTime - 20000;
+            const extraPause = Math.max(remaining / promptDurations.length, 0);
+
+            await playAudioWithPause("meditation_prompt1.mp3", 10000 + extraPause);
+            await playAudioWithPause("meditation_prompt2.mp3", 10000 + extraPause);
+            await playAudioWithPause("meditation_prompt3.mp3", 10000 + extraPause);
+            await playAudioWithPause("meditation_prompt4.mp3", 10000 + extraPause);
+            await playAudioWithPause("meditation_end.mp3");
+        }
+
+        async function playBodyScan() {
+            await playAudioWithPause("bodyscan_intro.mp3");
+            await playAudioWithPause("bodyscan_head.mp3", 10000);
+            await playAudioWithPause("bodyscan_shoulders.mp3", 10000);
+            await playAudioWithPause("bodyscan_arms.mp3", 10000);
+            await playAudioWithPause("bodyscan_chest.mp3", 10000);
+            await playAudioWithPause("bodyscan_belly.mp3", 10000);
+            await playAudioWithPause("bodyscan_legs.mp3", 10000);
+            await playAudioWithPause("bodyscan_whole.mp3", 10000);
+            await playAudioWithPause("bodyscan_end.mp3");
+        }
+
+        async function playRelaxation() {
+            await playAudioWithPause("relaxation_audio.mp3");
+        }
+    </script>
+</body>
+</html>
